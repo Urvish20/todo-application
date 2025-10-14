@@ -3,7 +3,7 @@ import TodoItem from "./TodoItem";
 import { useDispatch } from "react-redux";
 import { deleteTodo } from "../store/todoslice";
 
-export default function TodoList({ items, setItems, onEdit }) {
+export default function TodoList({ items, setItems, onEdit, searchQuery }) {
   const dispatch = useDispatch();
 
   const handleOnDragEnd = (result) => {
@@ -38,7 +38,9 @@ export default function TodoList({ items, setItems, onEdit }) {
             >
               {items.length === 0 && (
                 <p className="text-gray-500 text-center py-10 text-lg font-medium">
-                  No tasks yet. ✨ Click “Add Task” to get started!
+                  {searchQuery
+                    ? "No matching tasks found."
+                    : 'No tasks yet. ✨ Click "Add Task" to get started!'}
                 </p>
               )}
 
