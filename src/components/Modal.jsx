@@ -1,17 +1,28 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function Modal({ isOpen, onClose, onSave }) {
+export default function Modal({ isOpen, onClose, onSave, editTodo }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
+  useEffect(() => {
+    if (editTodo) {
+      setTitle(editTodo.title);
+      setDescription(editTodo.description || "");
+    } else {
+      setTitle("");
+      setDescription("");
+    }
+  }, [editTodo, isOpen]);
+
   const handleSubmit = () => {
     if (title.trim()) {
-      onSave({
-        id: Date.now(),
+      const todoData = {
+        id: editTodo ? editTodo.id : Date.now(),
         title: title.trim(),
         description: description.trim(),
-        completed: false,
-      });
+        completed: editTodo ? editTodo.completed : false,
+      };
+      onSave(todoData);
       setTitle("");
       setDescription("");
       onClose();
@@ -30,7 +41,9 @@ export default function Modal({ isOpen, onClose, onSave }) {
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-lg shadow-xl w-full max-w-md">
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
-          <h2 className="text-xl font-semibold text-gray-800">Add New Task</h2>
+          <h2 className="text-xl font-semibold text-gray-800">
+            {editTodo ? "Edit Task" : "Add New Task"}
+          </h2>
           <button
             onClick={handleClose}
             className="text-gray-400 hover:text-gray-600 transition-colors"
@@ -84,9 +97,9 @@ export default function Modal({ isOpen, onClose, onSave }) {
             <button
               type="button"
               onClick={handleSubmit}
-              className="px-5 py-2 cursor-pointer  text-white rounded-lg bg-cyan-700 transition-colors font-medium"
+              className="px-5 py-2 cursor-pointer text-white rounded-lg bg-cyan-700 transition-colors font-medium"
             >
-              Add Task
+              {editTodo ? "Edit Task" : "Add Task"}
             </button>
           </div>
         </div>
