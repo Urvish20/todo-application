@@ -1,7 +1,11 @@
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import TodoItem from "./TodoItem";
+import { useDispatch } from "react-redux";
+import { deleteTodo } from "../store/todoslice";
 
 export default function TodoList({ items, setItems, onEdit }) {
+  const dispatch = useDispatch();
+
   const handleOnDragEnd = (result) => {
     if (!result.destination) return;
 
@@ -13,7 +17,7 @@ export default function TodoList({ items, setItems, onEdit }) {
   };
 
   const handleDelete = (id) => {
-    setItems((prev) => prev.filter((item) => item.id !== id));
+    dispatch(deleteTodo(id));
   };
 
   return (
@@ -38,7 +42,7 @@ export default function TodoList({ items, setItems, onEdit }) {
                 </p>
               )}
 
-              {items.map((item, index) => (
+              {items?.map((item, index) => (
                 <Draggable
                   key={item.id}
                   draggableId={item.id.toString()}
