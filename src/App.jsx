@@ -10,6 +10,7 @@ function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editTodoItem, setEditTodoItem] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedTag, setSelectedTag] = useState(null);
   const todos = useSelector((state) => state.todos.todoItems);
   console.log("todos: ", todos);
   const dispatch = useDispatch();
@@ -17,13 +18,18 @@ function App() {
   const filteredTodos = useMemo(() => {
     return todos.filter((todo) => {
       const searchTerm = searchQuery.toLowerCase();
-      return (
+      const matchesSearch =
         todo.title.toLowerCase().includes(searchTerm) ||
         (todo.description &&
-          todo.description.toLowerCase().includes(searchTerm))
-      );
+          todo.description.toLowerCase().includes(searchTerm));
+
+      const matchesTag = selectedTag
+        ? todo.tags && todo.tags.includes(selectedTag)
+        : true;
+
+      return matchesSearch && matchesTag;
     });
-  }, [todos, searchQuery]);
+  }, [todos, searchQuery, selectedTag]);
 
   const onAddClick = () => {
     setEditTodoItem(null);
@@ -59,9 +65,19 @@ function App() {
     setSearchQuery(query);
   };
 
+  const handleTagFilter = (tag) => {
+    setSelectedTag(tag);
+  };
+
   return (
     <div className="min-h-screen bg-gray-100">
-      <Header onAddClick={onAddClick} onSearch={handleSearch} />
+      <Header
+        onAddClick={onAddClick}
+        onSearch={handleSearch}
+        onTagFilter={handleTagFilter}
+        selectedTag={selectedTag}
+        todos={todos} // Make sure this line is present
+      />
       <div className="container mx-auto px-4 py-8 max-w-2xl">
         <TodoList
           items={filteredTodos}

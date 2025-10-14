@@ -14,6 +14,17 @@ export const store = configureStore({
     reducer: {
         todos: persistedReducer,
     },
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            serializableCheck: {
+                // Ignore these action types for serialization check
+                ignoredActions: [
+                    'persist/PERSIST',
+                    'persist/REHYDRATE',
+                    'persist/REGISTER'
+                ],
+            },
+        }),
 });
 
 export const persistor = persistStore(store);

@@ -9,6 +9,18 @@ export default function TodoItem({ item, onDelete, onEdit }) {
         {item.description && (
           <p className="text-sm text-gray-600 mt-1">{item.description}</p>
         )}
+        {item.tags && item.tags.length > 0 && (
+          <div className="flex flex-wrap gap-2 mt-2">
+            {item.tags.map((tag) => (
+              <span
+                key={tag}
+                className="bg-cyan-100 text-cyan-800 px-2 py-0.5 rounded-md text-sm"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
       <div className="flex items-center space-x-3">
         <button
