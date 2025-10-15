@@ -12,7 +12,6 @@ function App() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTag, setSelectedTag] = useState(null);
   const todos = useSelector((state) => state.todos.todoItems);
-  console.log("todos: ", todos);
   const dispatch = useDispatch();
 
   const filteredTodos = useMemo(() => {

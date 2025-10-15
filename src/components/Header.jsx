@@ -15,8 +15,6 @@ export default function Header({
     )
   );
 
-  console.log("Available tags:", uniqueTags);
-
   return (
     <header className="bg-cyan-700 shadow-lg">
       <div className="max-w-4xl mx-auto px-6 py-5">
