@@ -1,7 +1,7 @@
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import TodoItem from "./TodoItem";
 import { useDispatch } from "react-redux";
-import { deleteTodo } from "../store/todoslice";
+import { deleteTodo } from "../store/todoSlice";
 
 export default function TodoList({ items, setItems, onEdit, searchQuery }) {
   const dispatch = useDispatch();
