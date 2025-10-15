@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import todosReducer from "./todoslice";
+import todos from "./todoslice.js";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
@@ -8,7 +8,7 @@ const persistConfig = {
     storage,
 };
 
-const persistedReducer = persistReducer(persistConfig, todosReducer);
+const persistedReducer = persistReducer(persistConfig, todos);
 
 export const store = configureStore({
     reducer: {
@@ -17,7 +17,6 @@ export const store = configureStore({
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
             serializableCheck: {
-                // Ignore these action types for serialization check
                 ignoredActions: [
                     'persist/PERSIST',
                     'persist/REHYDRATE',
