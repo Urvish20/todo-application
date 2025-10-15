@@ -4,7 +4,7 @@ import TodoList from "./components/TodoList";
 import "./App.css";
 import Modal from "./components/Modal";
 import { useSelector, useDispatch } from "react-redux";
-import { addTodo, editTodo, reorderTodos } from "./store/todoslice";
+import { addTodo, editTodo, reorderTodos } from "./store/todoSlice";
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
